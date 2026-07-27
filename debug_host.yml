@@ -2,4 +2,4 @@
 - name: "TEST INVENTORY"
   hosts: "{{ survey_ansible_hostname }}"
   tasks: 
-    debug:
+  - debug:
