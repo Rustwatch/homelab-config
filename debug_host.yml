@@ -1,0 +1,5 @@
+---
+- name: "TEST INVENTORY"
+  host: "{{ survey_ansible_hostname }}"
+  tasks: 
+    debug:
