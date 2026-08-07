@@ -1,0 +1,4 @@
+- name: "DEBUG ME"
+  hosts: "{{ survey_ansible_hostname }}"
+  tasks:
+    - debug:

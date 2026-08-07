@@ -1,0 +1,29 @@
+- name: Create temporary build directory
+  ansible.builtin.tempfile:
+    state: directory
+    suffix: semaphore_homelab
+  register: build_temp_dir_result
+
+- name: Store build directory path
+  ansible.builtin.set_fact:
+    build_temp_dir: "{{ build_temp_dir_result.path }}"
+  notify: Remove build temp dir
+
+- name: Read-write git checkout from github
+  ansible.builtin.git:
+    repo: git@github.com:Rustwatch/semaphore_homelab.git
+    dest: /tmp/checkout
+
+- name: Builds an artifact and stores it in storage
+  ansible.builtin.pause:
+    seconds: 10
+
+- name: Builds an artifact and stores it in storage
+  ansible.builtin.archive:
+    path: "{{ build_temp_dir }}"
+    dest: /tmp/semaphore_homelab-{{ semaphore_vars.task_details.target_version }}.tar.gz
+    format: gz
+
+- name: Print final version
+  ansible.builtin.debug:
+    msg: "Version {{ semaphore_vars.task_details.target_version }} was built and ready for deployment."
