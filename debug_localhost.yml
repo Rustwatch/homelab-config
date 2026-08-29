@@ -1,4 +1,0 @@
-- name: "DEBUG ME"
-  hosts: localhost
-  tasks:
-    - debug:

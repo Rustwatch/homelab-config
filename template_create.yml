@@ -1,0 +1,38 @@
+---
+- name: "Create Server YAML File for Terraform Deplo"
+  hosts: "localhost"
+  vars_files:
+  - tmp_vars/temp_localhost.yml
+  tasks: 
+  - name: "PARSE: Variable from YAML string"
+    ansible.builtin.set_fact:
+      template_create: "{{ template_create_yaml | from_yaml }}"
+
+  - name: "CHECK: If all values from YAML are set"
+    ansible.builtin.assert:
+      that:
+      - template_create.vm_name is defined
+      - template_create.vm_id is defined
+      - template_create.memory_mb is defined
+      - template_create.cpu_cores is defined
+      - template_create.network is defined
+      - template_create.network.bridge is defined
+      - template_create.network.vlan_id is defined
+      - template_create.network.address is defined
+      - template_create.network.gateway is defined
+      - template_create.disks is defined
+      - template_create.tags is defined
+
+  - name: "CHECK: If disk has correct parameters set"
+    ansible.builtin.assert:
+      that:
+      - item.datastore_id is defined
+      - item.interface is defined
+      - item.size is defined
+      - item.mount_point is defined
+      - item.filesystem is defined
+    loop: "{{ template_create.disks }}"
+
+
+  - ansible.builtin.debug:
+      msg: "{{ template_create.vm_name }}"

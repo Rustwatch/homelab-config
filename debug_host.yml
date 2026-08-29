@@ -1,5 +1,7 @@
 ---
 - name: "TEST INVENTORY"
-  hosts: "{{ survey_ansible_hostname }}"
+  hosts: "{{ survey_ansible_hostname | default('all')}}"
+  vars_files:
+    - vars/temp_host.yml
   tasks: 
   - debug:
