@@ -1,5 +1,5 @@
 ---
-- name: "Create Server YAML File for Terraform Deplo"
+- name: "Create Server YAML File for Terraform Deploy"
   hosts: "localhost"
   vars_files:
   - tmp_vars/temp_localhost.yml
