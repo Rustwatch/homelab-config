@@ -1,6 +1,8 @@
 ---
 - name: "Create Server YAML File for Terraform Deploy"
   hosts: "localhost"
+  connection: local
+  gather_facts: false
   vars_files:
   - tmp_vars/temp_localhost.yml
   tasks: 
