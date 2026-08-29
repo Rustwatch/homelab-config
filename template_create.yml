@@ -4,9 +4,9 @@
   connection: local
   gather_facts: false
   tasks: 
-  - name: "PARSE: Variable from YAML string"
-    ansible.builtin.set_fact:
-      template_create: "{{ template_create_yaml | from_yaml }}"
+  #- name: "PARSE: Variable from YAML string"
+  #  ansible.builtin.set_fact:
+  #    template_create: "{{ template_create_yaml | from_yaml }}"
 
   - name: "CHECK: If all values from YAML are set"
     ansible.builtin.assert:
