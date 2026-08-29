@@ -1,0 +1,9 @@
+---
+- template-create-json: '
+  {
+    "name":"svrangerp1",
+    "ram":4,
+    "cpus":4
+  }
+  '
+- ansible_user: sysautomation

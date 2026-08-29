@@ -1,0 +1,27 @@
+---
+template_create_yaml: |
+  vm_name: svrancherp1
+  vm_id: 100
+  memory_mb: 8192
+  cpu_cores: 4
+  network:
+    bridge: vmbr0
+    vlan_id: 22
+    address: 10.10.22.120/24
+    gateway: 10.10.22.1
+  disks:
+  - datastore_id: local-lvm
+    interface: scsi0
+    size: 32
+    mount_point: /
+    filesystem: ext4
+
+  - datastore_id: local-lvm
+    interface: scsi1
+    size: 32
+    mount_point: /var/container
+    filesystem: ext4
+  tags:
+  - application-rancher
+  - os-suse_microos
+  - provider-terraform
