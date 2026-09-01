@@ -1,9 +1,145 @@
 "svrancherp1":
-  "cloud_init_file_id": "local:snippets/user.cloud-config-svrancherp1.yaml"
-  "hostname": "svrancherp1"
-  "ipv4_address": "10.10.22.120/24"
+  "acpi": true
+  "agent": []
+  "amd_sev": []
+  "audio_device": []
+  "bios": "seabios"
+  "boot_order":
+  - "scsi0"
+  - "net0"
+  "cdrom": []
+  "clone": []
+  "cpu":
+  - "affinity": ""
+    "architecture": ""
+    "cores": 4
+    "flags": []
+    "hotplugged": 0
+    "limit": 0
+    "numa": false
+    "sockets": 1
+    "type": "x86-64-v2-AES"
+    "units": 0
+  "delete_unreferenced_disks_on_destroy": true
+  "description": ""
+  "disk":
+  - "aio": "io_uring"
+    "backup": true
+    "cache": "none"
+    "datastore_id": "local-lvm"
+    "discard": "ignore"
+    "file_format": "raw"
+    "file_id": ""
+    "import_from": "local:import/microos-latest.qcow2"
+    "interface": "scsi0"
+    "iothread": false
+    "path_in_datastore": "vm-100-disk-0"
+    "queues": 0
+    "replicate": true
+    "serial": ""
+    "size": 32
+    "speed": []
+    "ssd": false
+  - "aio": "io_uring"
+    "backup": true
+    "cache": "none"
+    "datastore_id": "local-lvm"
+    "discard": "ignore"
+    "file_format": "raw"
+    "file_id": ""
+    "import_from": ""
+    "interface": "scsi1"
+    "iothread": false
+    "path_in_datastore": "vm-100-disk-1"
+    "queues": 0
+    "replicate": true
+    "serial": ""
+    "size": 32
+    "speed": []
+    "ssd": false
+  "efi_disk": []
+  "hook_script_file_id": ""
+  "hostpci": []
+  "hotplug": null
+  "id": "100"
+  "initialization":
+  - "datastore_id": "local-lvm"
+    "dns": []
+    "file_format": ""
+    "interface": "ide2"
+    "ip_config":
+    - "ipv4":
+      - "address": "10.10.22.120/24"
+        "gateway": "10.10.22.1"
+      "ipv6": []
+    "meta_data_file_id": ""
+    "network_data_file_id": ""
+    "type": ""
+    "upgrade": true
+    "user_account": []
+    "user_data_file_id": "local:snippets/user.cloud-config-svrancherp1.yaml"
+    "vendor_data_file_id": ""
+  "ipv4_addresses": []
+  "ipv6_addresses": []
+  "keyboard_layout": "en-us"
+  "kvm_arguments": ""
+  "mac_addresses":
+  - "BC:24:11:82:13:03"
+  "machine": ""
+  "memory":
+  - "dedicated": 8192
+    "floating": 0
+    "hugepages": ""
+    "keep_hugepages": false
+    "shared": 0
+  "migrate": false
+  "name": "svrancherp1"
+  "network_device":
+  - "bridge": "vmbr0"
+    "disconnected": false
+    "enabled": true
+    "firewall": false
+    "mac_address": "BC:24:11:82:13:03"
+    "model": "virtio"
+    "mtu": 0
+    "queues": 0
+    "rate_limit": 0
+    "trunks": ""
+    "vlan_id": 22
+  "network_interface_names": []
+  "node_name": "hppve"
+  "numa": []
+  "on_boot": true
+  "operating_system": []
+  "pool_id": ""
+  "protection": false
+  "purge_on_destroy": true
+  "reboot": false
+  "reboot_after_update": true
+  "rng": []
+  "scsi_hardware": "virtio-scsi-pci"
+  "serial_device": []
+  "smbios": []
+  "started": true
+  "startup": []
+  "stop_on_destroy": false
+  "tablet_device": true
   "tags":
   - "application-rancher"
   - "os-suse_microos"
   - "provider-terraform"
+  "template": false
+  "timeout_clone": 1800
+  "timeout_create": 1800
+  "timeout_migrate": 1800
+  "timeout_move_disk": 1800
+  "timeout_reboot": 1800
+  "timeout_shutdown_vm": 1800
+  "timeout_start_vm": 1800
+  "timeout_stop_vm": 300
+  "tpm_state": []
+  "usb": []
+  "vga": []
+  "virtiofs": []
   "vm_id": 100
+  "watchdog": []
