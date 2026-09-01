@@ -1,0 +1,7 @@
+"svrancherp1":
+  "groups":
+  - "application-rancher"
+  - "os-suse_microos"
+  - "provider-terraform"
+  "hostname": "svrancherp1"
+  "ipv4_address": "10.10.22.120"
