@@ -1,7 +1,9 @@
 "svrancherp1":
-  "groups":
+  "cloud_init_file_id": "local:snippets/user.cloud-config-svrancherp1.yaml"
+  "hostname": "svrancherp1"
+  "ipv4_address": "10.10.22.120/24"
+  "tags":
   - "application-rancher"
   - "os-suse_microos"
   - "provider-terraform"
-  "hostname": "svrancherp1"
-  "ipv4_address": "10.10.22.120"
+  "vm_id": 100
