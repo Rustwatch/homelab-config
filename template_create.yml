@@ -35,4 +35,4 @@
 
 
   - ansible.builtin.debug:
-      msg: "{{ template_create.vm_name }}"
+      msg: "{{ template_create_vm_name }}"
