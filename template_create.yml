@@ -16,7 +16,7 @@
       - template_create_cpu_cores is defined
       - template_create_network_vlan_id is defined
       - template_create_network_address is defined
-      - template_create_disks is defined
+      - template_create_disk_yaml is defined
       - template_create_tags is defined
   
   - name: "PARSE: Variable from YAML string"
