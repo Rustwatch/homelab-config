@@ -12,16 +12,16 @@
     ansible.builtin.assert:
       that:
       - template_create_vm_name is defined
-        #      - template_create.vm_id is defined
-        #      - template_create.memory_mb is defined
-        #      - template_create.cpu_cores is defined
-        #      - template_create.network is defined
-        #      - template_create.network.bridge is defined
-        #      - template_create.network.vlan_id is defined
-        #      - template_create.network.address is defined
-        #      - template_create.network.gateway is defined
-        #      - template_create.disks is defined
-        #      - template_create.tags is defined
+      - template_create_memory_mb is defined
+      - template_create_cpu_cores is defined
+      - template_create_network_vlan_id is defined
+      - template_create_network_address is defined
+      - template_create_disks is defined
+      - template_create_tags is defined
+  
+  - name: "PARSE: Variable from YAML string"
+    ansible.builtin.set_fact:
+      template_create_disk: "{{ template_create_disk_yaml | from_yaml }}"
 
   - name: "CHECK: If disk has correct parameters set"
     ansible.builtin.assert:
@@ -31,7 +31,7 @@
       - item.size is defined
       - item.mount_point is defined
       - item.filesystem is defined
-    loop: "{{ template_create.disks }}"
+    loop: "{{ template_create_disks }}"
 
 
   - ansible.builtin.debug:
