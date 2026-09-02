@@ -16,12 +16,12 @@
       - template_create_cpu_cores is defined
       - template_create_network_vlan_id is defined
       - template_create_network_address is defined
-      - template_create_disk_yaml is defined
+      - template_create_disks_yaml is defined
       - template_create_tags is defined
   
   - name: "PARSE: Variable from YAML string"
     ansible.builtin.set_fact:
-      template_create_disk: "{{ template_create_disk_yaml | from_yaml }}"
+      template_create_disks: "{{ template_create_disks_yaml | from_yaml }}"
 
   - name: "CHECK: If disk has correct parameters set"
     ansible.builtin.assert:
