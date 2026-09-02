@@ -32,6 +32,8 @@
       - item.mount_point is defined
       - item.filesystem is defined
     loop: "{{ template_create_disks }}"
+    loop_control:
+      label: "{{ item.interface }}"
 
 
   - ansible.builtin.debug:
