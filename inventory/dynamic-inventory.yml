@@ -3,12 +3,12 @@ all:
     svrancherp1:
       ansible_host: 10.10.22.120
   children:
-    application-rancher:
+    application_rancher:
       hosts:
         svrancherp1:
-    os-suse_microos:
+    os_suse_microos:
       hosts:
         svrancherp1:
-    provider-terraform:
+    provider_terraform:
       hosts:
         svrancherp1:
