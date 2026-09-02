@@ -11,7 +11,7 @@
   - name: "CHECK: If all values from YAML are set"
     ansible.builtin.assert:
       that:
-      - template_create.vm_name is defined
+      - template_create_vm_name is defined
         #      - template_create.vm_id is defined
         #      - template_create.memory_mb is defined
         #      - template_create.cpu_cores is defined
