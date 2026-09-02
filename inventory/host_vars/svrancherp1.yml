@@ -125,9 +125,9 @@
   "stop_on_destroy": false
   "tablet_device": true
   "tags":
-  - "application-rancher"
-  - "os-suse_microos"
-  - "provider-terraform"
+  - "application_rancher"
+  - "os_suse_microos"
+  - "provider_terraform"
   "template": false
   "timeout_clone": 1800
   "timeout_create": 1800
