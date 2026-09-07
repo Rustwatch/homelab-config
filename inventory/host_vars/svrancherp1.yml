@@ -87,7 +87,7 @@
   - "BC:24:11:82:13:03"
   "machine": ""
   "memory":
-  - "dedicated": 8192
+  - "dedicated": 9220
     "floating": 0
     "hugepages": ""
     "keep_hugepages": false
