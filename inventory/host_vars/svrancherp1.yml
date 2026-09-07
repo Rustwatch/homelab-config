@@ -13,7 +13,7 @@
   - "affinity": ""
     "architecture": ""
     "cores": 4
-    "flags": []
+    "flags": null
     "hotplugged": 0
     "limit": 0
     "numa": false
