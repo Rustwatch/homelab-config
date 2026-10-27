@@ -12,8 +12,8 @@
   "cpu":
   - "affinity": ""
     "architecture": ""
-    "cores": 4
-    "flags": []
+    "cores": 1
+    "flags": null
     "hotplugged": 0
     "limit": 0
     "numa": false
@@ -84,10 +84,10 @@
   "keyboard_layout": "en-us"
   "kvm_arguments": ""
   "mac_addresses":
-  - "BC:24:11:28:9E:57"
+  - "BC:24:11:5A:DA:19"
   "machine": ""
   "memory":
-  - "dedicated": 8192
+  - "dedicated": 2048
     "floating": 0
     "hugepages": ""
     "keep_hugepages": false
@@ -99,7 +99,7 @@
     "disconnected": false
     "enabled": true
     "firewall": false
-    "mac_address": "BC:24:11:28:9E:57"
+    "mac_address": "BC:24:11:5A:DA:19"
     "model": "virtio"
     "mtu": 0
     "queues": 0
