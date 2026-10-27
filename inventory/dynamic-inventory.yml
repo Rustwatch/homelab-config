@@ -27,11 +27,13 @@ all:
         svranchersp1:
         svrancherwp1:
         svrancherwp2:
-    type_controller:
-      hosts:
-        svrancherdbp1:
-        svranchersp1:
-    type_worker:
+    type_agent:
       hosts:
         svrancherwp1:
         svrancherwp2:
+    type_database:
+      hosts:
+        svrancherdbp1:
+    type_server:
+      hosts:
+        svranchersp1:
