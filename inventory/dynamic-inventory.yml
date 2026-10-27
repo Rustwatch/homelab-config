@@ -1,5 +1,7 @@
 all:
   hosts:
+    svrancherdbp1:
+      ansible_host: 10.10.22.118
     svranchersp1:
       ansible_host: 10.10.22.119
     svrancherwp1:
@@ -9,21 +11,25 @@ all:
   children:
     application_rancher:
       hosts:
+        svrancherdbp1:
         svranchersp1:
         svrancherwp1:
         svrancherwp2:
     os_suseLeap:
       hosts:
+        svrancherdbp1:
         svranchersp1:
         svrancherwp1:
         svrancherwp2:
     provider_terraform:
       hosts:
+        svrancherdbp1:
         svranchersp1:
         svrancherwp1:
         svrancherwp2:
     type_controller:
       hosts:
+        svrancherdbp1:
         svranchersp1:
     type_worker:
       hosts:
