@@ -1,0 +1,9 @@
+---
+- name: test
+  hosts: all
+  vars_files:
+  - tmp_vars/credentials.yml
+  tasks:
+    - name: "INCLUDE ROLE: day0_standard_config"
+      ansible.builtin.include_role:
+        name: day0_standard_config

@@ -1,0 +1,19 @@
+- name: "ZYPPER: Update host"
+  community.general.zypper:
+    name: '*'
+    state: latest
+  become: yes
+
+- name: "REBOOT: Machine"
+  ansible.builtin.reboot:
+  become: yes
+
+- name: "ZYPPER: Install required packages"
+  community.general.zypper:
+    name: "{{ day0_standard_config_zypper_standard_packages }}"
+    state: present
+  become: yes
+
+- name: "REBOOT: Machine"
+  ansible.builtin.reboot:
+  become: yes

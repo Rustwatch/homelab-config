@@ -1,0 +1,28 @@
+---
+# tasks file for day1_deploy_k3s
+# https://docs.k3s.io/installation/requirements
+- name: Allow Kubernetes API server port
+  ansible.posix.firewalld:
+    port: 6443/tcp
+    permanent: true
+    state: enabled
+  notify: Reload firewalld
+  become: true
+
+- name: Trust Kubernetes pod network
+  ansible.posix.firewalld:
+    zone: trusted
+    source: 10.42.0.0/16
+    permanent: true
+    state: enabled
+  notify: Reload firewalld
+  become: true
+
+- name: Trust Kubernetes service network
+  ansible.posix.firewalld:
+    zone: trusted
+    source: 10.43.0.0/16
+    permanent: true
+    state: enabled
+  notify: Reload firewalld
+  become: true

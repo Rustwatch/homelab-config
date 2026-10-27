@@ -1,0 +1,15 @@
+---
+- name: Gather service facts
+  ansible.builtin.service_facts:
+
+- fail:
+  when: "'k3s.service' not in ansible_facts.services"
+
+- name: Run K3s installer
+  ansible.builtin.command:
+    cmd: /usr/bin/k3s-install
+  environment:
+    INSTALL_K3S_EXEC: "server --disable=traefik"
+  args:
+    creates: /etc/systemd/system/k3s.service
+  when: false

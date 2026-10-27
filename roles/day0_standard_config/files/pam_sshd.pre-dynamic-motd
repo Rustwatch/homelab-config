@@ -1,0 +1,2 @@
+session optional pam_exec.so /usr/local/sbin/update-dynamic-motd
+session optional pam_motd.so motd=/run/custom/motd.dynamic

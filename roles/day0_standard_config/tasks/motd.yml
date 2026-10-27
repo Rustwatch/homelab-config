@@ -1,0 +1,55 @@
+---
+- name: "READ: /etc/fstab"
+  ansible.builtin.slurp: 
+    src: "/etc/fstab"
+  register: _day0_standard_config_motd_fstab_results
+
+- name: "Add Header"
+  debug:
+    msg: "{{ _day0_standard_config_motd_fstab_results.content | b64decode | split('\n') | select('search', 'comment=cloudconfig|^[^ ]+ / ') }}"
+
+- name: "CREATE: /etc/update-motd.d/ directory"
+  ansible.builtin.file:
+    path: /usr/local/lib/dynamic-motd
+    state: directory
+    owner: root
+    group: root
+    mode: "0755"
+  become: true
+
+- name: "CREATE: /etc/update-motd.d/ directory"
+  ansible.builtin.file:
+    path: /run/custom
+    state: directory
+    owner: root
+    group: root
+    mode: "0777"
+  become: true
+
+- name: "MOTD: Deploy scripts"
+  ansible.builtin.copy:
+    src: "{{ item }}"
+    dest: /usr/local/lib/dynamic-motd/
+    mode: "0755"
+  loop: "{{ lookup('ansible.builtin.fileglob', role_path + '/files/motd_*.sh', wantlist=True) }}"
+  become: true
+
+- name: "MOTD: Install generator"
+  ansible.builtin.copy:
+    src: local_motd_script.sh
+    dest: /usr/local/sbin/update-dynamic-motd
+    owner: root
+    group: root
+    mode: "0755"
+  become: true
+
+- name: "MOTD: PAM add setting"
+  ansible.builtin.copy:
+    src: pam_sshd.pre-dynamic-motd
+    dest: /etc/pam.d/sshd.pre-dynamic-motd
+    owner: root
+    group: root
+    mode: "0755"
+  become: true
+
+

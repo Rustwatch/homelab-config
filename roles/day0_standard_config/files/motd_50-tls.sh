@@ -1,0 +1,86 @@
+#!/usr/bin/env bash
+# This script calculates the remaining time until your ssl certificates expire
+# Base version taken from https://gitlab.com/Scrumplex/motd/blob/master/30-tls
+
+# REQUIREMENTS: openssl
+## CONFIG
+
+certificate_dirs=(
+    "/path/to/cert/dir/"
+)
+
+#custom_certificates=(
+#    "/path/to/cert"
+#    "/etc/letsencrypt/live/domain/fullchain.pem"
+#)
+
+red="\e[31m"
+orange="\e[95;38;5;214m"
+green="\e[1;32m"
+undim="\e[0m"
+## END CONFIG
+
+# Make sure that the "column" program can display our unicode dots:
+export LANG="en_US.UTF-8"
+
+# Calculate the expiry date from a local cert
+expiry_date () {
+    out=$(openssl x509 -enddate -noout -in "$1" | cut -d "=" -f 2)
+    echo "$out"
+}
+
+# Generate a unix timestamp from a given date string
+unix_date () {
+    date -d "$1" +%s
+}
+
+# Generate a string based on the expiry date
+expires_in () {
+    diff=$(( $1 - $2 ))
+    expiresInHours=$(( diff / 3600 ))
+
+    if [ $expiresInHours -gt 48 ]; then
+        echo "$(( expiresInHours / 24 )) days"
+    else
+        echo "$expiresInHours hours"
+    fi
+}
+
+# Find all certificates and extend with custom certificates
+IFS=$'\n'
+certificates=($(find "${certificate_dirs[*]}" -type f -name "*.crt" -o -name "*.cer" 2>/dev/null))
+unset IFS
+certificates+=("${custom_certificates[@]}")
+
+if [ ${#certificates[@]} -gt 0 ]; then
+echo ""
+echo "tls certificates:"
+output=""
+output+="  Domain | Status\n"
+for i in "${!certificates[@]}"; do
+    cert="${certificates[$i]}"
+    certname=$(openssl x509 -subject -noout -in "$cert" | cut -d "=" -f3)
+    exp_date=$(expiry_date "$cert")
+    expires=$(unix_date "$exp_date")
+    now=$(unix_date "now")
+    inAWeek=$(unix_date "1 week")
+
+    expiresIn=$(expires_in "$expires" "$now")
+    expiryDate=$(date -d "$exp_date" +"%d.%m.%Y")
+
+    # We can also get the name of the certificate automatically with:
+    # openssl x509 -subject -noout -in $cert | cut -d " " -f3
+    # But that takes a lot of time. We don't want to wait during login
+
+    if [ "$expires" -le "$now" ]; then
+        output+=" $red▲$undim $certname | ${red}expired ($expiryDate)$undim\n"
+    elif [ "$expires" -le "$inAWeek" ]; then
+        output+="  $orange●$undim $certname | ${orange}expiring soon ($expiresIn left)$undim\n"
+    else
+        output+="  $green●$undim $certname | ${green}expires in $expiresIn ($expiryDate)$undim\n"
+    fi
+done
+
+echo -e "$output" | column -t -s '|'
+fi
+

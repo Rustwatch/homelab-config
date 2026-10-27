@@ -1,0 +1,8 @@
+#SPDX-License-Identifier: MIT-0
+---
+# vars file for day0_standard_config
+day0_standard_config_zypper_standard_packages:
+- "python3"           #ansible requirement
+- "python3-firewall"  #ansible.builtin.firewalld requirement
+- "firewalld"         #ansible.builtin.firewalld requirement
+- "figlet"            #motd requirement

@@ -1,0 +1,4 @@
+---
+- name: "Dummy"
+  debug:
+    msg: TEST

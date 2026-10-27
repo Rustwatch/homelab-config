@@ -1,0 +1,23 @@
+---
+- name: "INCLUDE: Update and install required packages"
+  ansible.builtin.include_tasks: zypper.yml
+
+- name: "INCLUDE: Create Message of the Day"
+  ansible.builtin.include_tasks: motd.yml
+  when: false
+
+- name: "SET_FACTS: Application Tags"
+  ansible.builtin.set_fact:
+    day0_standard_config_host_tags: "{{ proxmox.tags | select('match', '^application_') | list }}"
+
+- name: "INCLUDE: Firewall Rules"
+  ansible.builtin.include_tasks: firewall.yml
+
+- name: "INCLUDE"
+  ansible.builtin.include_tasks: "{{ loop_tag }}.yml"
+  loop: "{{ day0_standard_config_host_tags }}"
+  loop_control:
+    loop_var: loop_tag
+
+
+

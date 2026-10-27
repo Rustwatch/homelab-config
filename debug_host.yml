@@ -1,7 +1,11 @@
 ---
-- name: "TEST INVENTORY"
-  hosts: "{{ survey_ansible_hostname | default('all')}}"
+- name: "Install Rancher"
+  hosts: all
+  vars:
+    ansible_host_key_checking: false
   vars_files:
-    - vars/temp_host.yml
+    - tmp_vars/credentials.yml
   tasks: 
-  - debug:
+  - name: "ROLE: Install K3S"
+    ansible.builtin.include_role: 
+      name: day1_deploy_k3s 

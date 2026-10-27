@@ -1,0 +1,7 @@
+---
+# tasks file for day1_deploy_k3s
+- name: "INCLUDE: Task for firewall"
+  ansible.builtin.include_tasks: general-firewall.yml
+
+- name: "INCLUDE: Task for firewall"
+  ansible.builtin.include_tasks: server-deploy.yml

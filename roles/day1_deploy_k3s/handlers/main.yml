@@ -1,0 +1,7 @@
+#SPDX-License-Identifier: MIT-0
+---
+# handlers file for day1_deploy_k3s
+- name: Reload firewalld
+  ansible.builtin.command: firewall-cmd --reload
+  changed_when: true
+  become: true
