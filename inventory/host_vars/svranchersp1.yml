@@ -125,9 +125,9 @@
   "stop_on_destroy": false
   "tablet_device": true
   "tags":
-  - "application_rancher"
-  - "os_suseleap"
   - "provider_terraform"
+  - "os_suseLeap"
+  - "application_rancher"
   - "type_controller"
   "template": false
   "timeout_clone": 1800
