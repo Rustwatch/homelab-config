@@ -15,16 +15,9 @@ all:
         svranchersp1:
         svrancherwp1:
         svrancherwp2:
-    mode_controller:
-      hosts:
-        svranchersp1:
     mode_primary:
       hosts:
         svrancherdbp1:
-    mode_worker:
-      hosts:
-        svrancherwp1:
-        svrancherwp2:
     os_suseLeap:
       hosts:
         svrancherdbp1:
@@ -37,13 +30,15 @@ all:
         svranchersp1:
         svrancherwp1:
         svrancherwp2:
-    type_agent:
-      hosts:
-        svrancherwp1:
-        svrancherwp2:
-    type_database:
-      hosts:
-        svrancherdbp1:
-    type_server:
+    type_controller:
       hosts:
         svranchersp1:
+    type_postgres:
+      hosts:
+        svrancherwp1:
+    type_postgresdb:
+      hosts:
+        svrancherdbp1:
+    type_worker:
+      hosts:
+        svrancherwp2:
