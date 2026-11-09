@@ -15,6 +15,16 @@ all:
         svranchersp1:
         svrancherwp1:
         svrancherwp2:
+    mode_controller:
+      hosts:
+        svranchersp1:
+    mode_primary:
+      hosts:
+        svrancherdbp1:
+    mode_worker:
+      hosts:
+        svrancherwp1:
+        svrancherwp2:
     os_suseLeap:
       hosts:
         svrancherdbp1:
