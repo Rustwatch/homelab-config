@@ -1,44 +1,42 @@
 all:
   hosts:
+    svrancherap1:
+      ansible_host: 10.10.22.120
+    svrancherap2:
+      ansible_host: 10.10.22.121
     svrancherdbp1:
       ansible_host: 10.10.22.118
     svranchersp1:
       ansible_host: 10.10.22.119
-    svrancherwp1:
-      ansible_host: 10.10.22.120
-    svrancherwp2:
-      ansible_host: 10.10.22.121
   children:
     application_rancher:
       hosts:
+        svrancherap1:
+        svrancherap2:
         svrancherdbp1:
         svranchersp1:
-        svrancherwp1:
-        svrancherwp2:
     mode_primary:
       hosts:
         svrancherdbp1:
     os_suseLeap:
       hosts:
+        svrancherap1:
+        svrancherap2:
         svrancherdbp1:
         svranchersp1:
-        svrancherwp1:
-        svrancherwp2:
     provider_terraform:
       hosts:
+        svrancherap1:
+        svrancherap2:
         svrancherdbp1:
         svranchersp1:
-        svrancherwp1:
-        svrancherwp2:
+    type_agent:
+      hosts:
+        svrancherap1:
+        svrancherap2:
     type_controller:
       hosts:
         svranchersp1:
-    type_postgres:
-      hosts:
-        svrancherwp1:
     type_postgresdb:
       hosts:
         svrancherdbp1:
-    type_worker:
-      hosts:
-        svrancherwp2:
