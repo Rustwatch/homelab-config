@@ -13,7 +13,7 @@
   - "affinity": ""
     "architecture": ""
     "cores": 4
-    "flags": null
+    "flags": []
     "hotplugged": 0
     "limit": 0
     "numa": false
@@ -126,6 +126,7 @@
   "tablet_device": true
   "tags":
   - "application_rancher"
+  - "function_k3s"
   - "os_suseleap"
   - "provider_terraform"
   - "type_agent"
