@@ -125,9 +125,10 @@
   "stop_on_destroy": false
   "tablet_device": true
   "tags":
-  - "provider_terraform"
-  - "os_suseLeap"
   - "application_rancher"
+  - "function_k3s"
+  - "os_suseleap"
+  - "provider_terraform"
   - "type_agent"
   "template": false
   "timeout_clone": 1800
