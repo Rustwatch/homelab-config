@@ -15,6 +15,11 @@ all:
         svrancherap2:
         svrancherdbp1:
         svranchersp1:
+    function_k3s:
+      hosts:
+        svrancherap1:
+        svrancherap2:
+        svranchersp1:
     mode_primary:
       hosts:
         svrancherdbp1:
