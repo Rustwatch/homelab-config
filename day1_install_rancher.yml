@@ -37,7 +37,7 @@
     k3s_ansible_cluster_group: "function_k3s"
     k3s_ansible_server_group: "type_controller"
     k3s_ansible_agent_group: "type_agent"
-    k3s_server_location: /var/container/rancher/k3s
+    #k3s_server_location: /var/container/rancher/k3s
     use_external_database: true
     external_database_ip: "{{ hostvars[groups['type_postgresdb'][0]]['ansible_facts']['default_ipv4']['address'] }}"
     extra_server_args: "--datastore-endpoint=postgres://{{ postgres_database_user }}:{{ postgres_database_pass | urlencode | replace('%', '%%') }}@{{ external_database_ip }}:{{ postgres_database_port }}/{{ postgres_database_name }}"
