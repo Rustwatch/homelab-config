@@ -13,7 +13,7 @@
   - "affinity": ""
     "architecture": ""
     "cores": 4
-    "flags": []
+    "flags": null
     "hotplugged": 0
     "limit": 0
     "numa": false
@@ -84,7 +84,7 @@
   "keyboard_layout": "en-us"
   "kvm_arguments": ""
   "mac_addresses":
-  - "BC:24:11:0B:D8:6F"
+  - "BC:24:11:E9:D6:BF"
   "machine": ""
   "memory":
   - "dedicated": 8192
@@ -99,7 +99,7 @@
     "disconnected": false
     "enabled": true
     "firewall": false
-    "mac_address": "BC:24:11:0B:D8:6F"
+    "mac_address": "BC:24:11:E9:D6:BF"
     "model": "virtio"
     "mtu": 0
     "queues": 0
