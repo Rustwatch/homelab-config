@@ -24,7 +24,10 @@
   tasks:
   - name: Install Required Packages
     community.general.zypper:
-      name: python3-rpm
+      name: 
+      - python3-rpm
+      - k3s-install
+      - k3s-selinux
       state: present
     become: true
 
