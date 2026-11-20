@@ -1,0 +1,5 @@
+postgres_os_user: "podadm"
+postgres_database_name: "kubernetesdb"
+postgres_database_port: 5432
+postgres_database_user: "k3s_admin"
+postgres_database_pass: "{{ vault_postgres_database_pass }}"
