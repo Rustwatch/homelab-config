@@ -1,4 +1,0 @@
----
-roles:
-  - name: https://github.com/alvistack/ansible-role-podman.git
-    type: git
