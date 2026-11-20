@@ -1,0 +1,76 @@
+---
+- name: "INSTALL: Required Packages for container"
+  zypper:
+    name: 
+    - passt
+    state: present
+  become: true 
+
+- name: "CREATE: User podadm"
+  ansible.builtin.user:
+    name: "{{ day1_deploy_podman_postgres_os_user}}"
+    create_home: true
+    home: "{{ day1_deploy_podman_postgres_home }}"
+    state: present
+  become: true
+
+- name: "CREATE: podadm root directory"
+  ansible.builtin.file:
+    path: "{{ day1_deploy_podman_postgres_container_directory }}"
+    state: directory
+    owner: "{{ day1_deploy_podman_postgres_os_user }}"
+    group: "{{ day1_deploy_podman_postgres_os_user }}"
+    mode: '0750'
+  become: true
+
+- name: "CREATE: Quadlet directory"
+  ansible.builtin.file:
+    path: "/home/{{ day1_deploy_podman_postgres_os_user}}/.config/containers/systemd"
+    state: directory
+    owner: "{{ day1_deploy_podman_postgres_os_user}}"
+    group: "{{ day1_deploy_podman_postgres_os_user}}"
+    mode: '0750'
+  become: true
+
+- name: "CONFIGURE: Podman Quadlet user generator"
+  ansible.builtin.file:
+    src: /usr/libexec/podman/quadlet
+    dest: /usr/lib/systemd/user-generators/podman-user-generator
+    state: link
+    owner: root
+    group: root
+  become: true
+
+- name: "DEPLOY TEMPLATE: For storage location"
+  ansible.builtin.template:
+    src: storage.conf.j2
+    dest: "{{ day1_deploy_podman_postgres_home }}/.config/containers/storage.conf"
+    owner: "{{ day1_deploy_podman_postgres_os_user}}"
+    group: "{{ day1_deploy_podman_postgres_os_user}}"
+    mode: '0640'
+  become: true
+
+- name: "GET: Podman user UID"
+  ansible.builtin.getent:
+    database: passwd
+    key: "{{ day1_deploy_podman_postgres_os_user}}"
+  become: true
+
+- name: "SET: Podman user UID"
+  ansible.builtin.set_fact:
+    day1_deploy_podman_uid: "{{ ansible_facts.getent_passwd[day1_deploy_podman_postgres_os_user][1] }}"
+
+- name: "DEPLOY TEMPLATE: Functions for Rootloes podman"
+  ansible.builtin.template:
+    src: podman-functions.sh.j2
+    dest: /etc/profile.d/podman-functions.sh
+    owner: root
+    group: root
+    mode: "0644"
+  become: true
+  
+- name: "ENABLE: Lingering for podadm"
+  ansible.builtin.command:
+    cmd: "loginctl enable-linger {{ day1_deploy_podman_postgres_os_user}}"
+    creates: "/var/lib/systemd/linger/{{ day1_deploy_podman_postgres_os_user}}"
+  become: true

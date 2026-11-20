@@ -1,0 +1,36 @@
+---
+- name: "Install Postgres Database"
+  hosts: type_postgresdb
+  vars_files:
+   - tmp_vars/credentials.yml
+#  vars:
+#    day1_deploy_podman_postgres_os_user: "{{ postgres_os_user }}"
+#    day1_deploy_podman_postgres_container_name: postgresdb
+#    day1_deploy_podman_postgres_container_memory: 2048
+#    day1_deploy_podman_postgres_container_cpu: 1
+#    day1_deploy_podman_postgres_container_directory: /var/opt/podman
+#    day1_deploy_podman_postgres_container_volume_name: postgres_data
+#    day1_deploy_podman_postgres_container_network_name: nw_postgres
+#    day1_deploy_podman_postgres_container_secret_dbpass: sec_postgres
+#    day1_deploy_podman_postgres_database_version: 18
+#    day1_deploy_podman_postgres_database_name: "{{ postgres_database_name }}"
+#    day1_deploy_podman_postgres_database_port: "{{ postgres_database_port }}"
+#    day1_deploy_podman_postgres_database_user: "{{ postgres_database_user }}"
+#    day1_deploy_podman_postgres_database_pass: "{{ postgres_database_pass }}"
+#  roles:
+#  - role: day1_deploy_podman_postgres 
+
+- name: Import kube cluster playbook
+  ansible.builtin.import_playbook: k3s.orchestration.upgrade
+  vars: 
+    k3s_ansible_cluster_group: "function_k3s"
+    k3s_ansible_server_group: "type_controller"
+    k3s_ansible_agent_group: "type_agent"
+    use_external_database: true
+    external_database_ip: "{{ hostvars[groups['type_postgresdb'][0]]['ansible_facts']['default_ipv4']['address'] }}"
+    extra_server_args: "--datastore-endpoint=postgres://{{ postgres_database_user }}:{{ postgres_database_pass | urlencode | replace('%', '%%') }}@{{ external_database_ip }}:{{ postgres_database_port }}/{{ postgres_database_name }}"
+    api_endpoint: "{{ hostvars[groups['type_controller'][0]]['ansible_facts']['default_ipv4']['address'] }}"
+    ansible_user: "sysautomation"
+    ansible_host_key_checking: false
+    k3s_version: "{{ k3sversion }}"
+    token: "sdfZH3JWbXzkO25wQsJJ5AIyHDgtrweyyE2qnxqP8IaWPr2Lb58xdiQAAezKgUwsJ8cSSiBLCRO"

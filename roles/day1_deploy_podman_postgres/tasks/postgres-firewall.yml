@@ -1,0 +1,11 @@
+---
+# tasks file for day1_deploy_k3s
+# https://docs.k3s.io/installation/requirements
+- name: "FIREWALL: Allow Postgres SQL Port"
+  ansible.posix.firewalld:
+    port: "{{ day1_deploy_podman_postgres_database_port }}/tcp"
+    permanent: true
+    state: enabled
+  notify: Reload firewalld
+  become: true
+

@@ -1,0 +1,16 @@
+---
+- name: "INSTALL: SELINUX Requirements"
+  zypper:
+    name: 
+    - container-selinux 
+    - policycoreutils-python-utils
+    state: present
+  become: true 
+
+- name: "CONFIGURE: SELinux equivalence for Podman storage"
+  community.general.sefcontext:
+    target: /var/opt/podman
+    substitute: /var/lib/containers
+    state: present
+  become: true
+  notify: Restore SELinux contexts on Podman storage

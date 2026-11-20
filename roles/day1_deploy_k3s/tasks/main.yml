@@ -4,4 +4,7 @@
   ansible.builtin.include_tasks: general-firewall.yml
 
 - name: "INCLUDE: Task for firewall"
-  ansible.builtin.include_tasks: server-deploy.yml
+  ansible.builtin.include_tasks: general-config.yml
+
+- name: "INCLUDE: Task for server deploy"
+  ansible.builtin.include_tasks: "{{ day1_deploy_k3s_node }}-deploy.yml"

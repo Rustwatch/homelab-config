@@ -1,0 +1,46 @@
+---
+- name: "DEPLOY: PostgreSQL resources"
+  become: true
+  become_user: "{{ day1_deploy_podman_postgres_os_user }}"
+  environment:
+    XDG_RUNTIME_DIR: "/run/user/{{ day1_deploy_podman_uid }}"
+    DBUS_SESSION_BUS_ADDRESS: "unix:path=/run/user/{{ day1_deploy_podman_uid }}/bus"
+  block:
+
+    - name: "CREATE: PostgreSQL network"
+      containers.podman.podman_network:
+        name: "{{ day1_deploy_podman_postgres_container_network_name }}"
+        state: present
+
+    - name: "CREATE: PostgreSQL volume"
+      containers.podman.podman_volume:
+        name: "{{ day1_deploy_podman_postgres_container_volume_name }}"
+        state: present
+
+    - name: "CREATE: PostgreSQL password secret"
+      containers.podman.podman_secret:
+        name: "{{ day1_deploy_podman_postgres_container_secret_dbpass }}"
+        data: "{{ day1_deploy_podman_postgres_database_pass }}"
+        state: present
+      no_log: true
+
+    - name: "CREATE: Quadlet directory"
+      ansible.builtin.file:
+        path: "/home/{{ day1_deploy_podman_postgres_os_user}}/.config/containers/systemd"
+        state: directory
+        owner: "{{ day1_deploy_podman_postgres_os_user}}"
+        group: "{{ day1_deploy_podman_postgres_os_user}}"
+        mode: '0750'
+      become: true
+    
+    - name: "CONFIGURE: PostgreSQL Quadlet"
+      ansible.builtin.template:
+        src: postgresdb.container.j2
+        dest: "/home/{{ day1_deploy_podman_postgres_os_user}}/.config/containers/systemd/{{ day1_deploy_podman_postgres_container_name }}.container"
+        owner: "{{ day1_deploy_podman_postgres_os_user}}"
+        group: "{{ day1_deploy_podman_postgres_os_user}}"
+        mode: '0640'
+      become: true
+      notify:
+        - "RELOAD: Podman systemd"
+        - "RESTART: PostgreSQL"

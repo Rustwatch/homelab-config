@@ -1,0 +1,14 @@
+k3s_api_token: "{{ vault_k3s_api_token }}"
+k3s_version_nr: "v2.35.10+k3s1"
+
+rancher_hostname: "svranchersp1.server.tech.home.arpa"
+rancher_replicas: 1
+rancher_bootstrap_password: "{{ vault_rancher_bootstrap_password }}"
+
+#https://www.suse.com/suse-rancher/support-matrix/all-supported-versions/rancher-v2-15-3/
+#https://www.suse.com/suse-k3s/support-matrix/all-supported-versions/k3s-v1-35/
+rancher_namespace: cattle-system
+rancher_chart_version: "2.15.3"
+#https://cert-manager.io/docs/installation/helm/
+cert_manager_namespace: cert-manager
+cert_manager_chart_version: "1.21.3"

@@ -1,0 +1,26 @@
+# Rootless Podman management functions
+podlogs() {
+    local service="$1"
+    shift
+
+    sudo -u {{ day1_deploy_podman_postgres_os_user }} env \
+        XDG_RUNTIME_DIR=/run/user/{{ day1_deploy_podman_uid }} \
+        DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/{{ day1_deploy_podman_uid }}/bus \
+        journalctl --user -u "${service}.service" "$@" --no-pager
+}
+
+podsystem() {
+    sudo -u podadm -H env \
+        XDG_RUNTIME_DIR=/run/user/{{ day1_deploy_podman_uid }} \
+        DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/{{ day1_deploy_podman_uid }}/bus \
+        systemctl --user "$@"
+}
+
+podctrl() {
+    sudo -u podadm sh -c '
+        cd "$HOME" || exit 1
+        export XDG_RUNTIME_DIR="/run/user/{{ day1_deploy_podman_uid }}"
+        export DBUS_SESSION_BUS_ADDRESS="unix:path=/run/user/{{ day1_deploy_podman_uid }}/bus"
+        exec podman "$@"
+    ' sh "$@"
+}

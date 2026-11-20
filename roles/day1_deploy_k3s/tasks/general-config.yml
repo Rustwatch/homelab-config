@@ -1,0 +1,8 @@
+---
+- name: "DOWNLOAD: Packages for K3S"
+  community.general.zypper:
+    name: 
+    - "k3s-install"
+    - "k3s-selinux"
+    state: present
+  become: true

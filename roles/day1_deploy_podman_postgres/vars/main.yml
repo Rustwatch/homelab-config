@@ -1,0 +1,4 @@
+#SPDX-License-Identifier: MIT-0
+---
+# vars file for day1_deploy_podman_postgres
+day1_deploy_podman_postgres_home: "/home/{{ day1_deploy_podman_postgres_os_user }}"

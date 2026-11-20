@@ -1,0 +1,44 @@
+[Unit]
+Description=PostgreSQL Database
+Wants=network-online.target
+After=network-online.target
+
+[Container]
+Image=docker.io/library/postgres:{{ day1_deploy_podman_postgres_database_version }}
+ContainerName={{ day1_deploy_podman_postgres_container_name }}
+
+Environment=POSTGRES_DB={{ day1_deploy_podman_postgres_database_name }}
+Environment=POSTGRES_USER={{ day1_deploy_podman_postgres_database_user }}
+Environment=POSTGRES_PASSWORD_FILE=/run/secrets/{{ day1_deploy_podman_postgres_container_secret_dbpass}}
+
+Secret={{ day1_deploy_podman_postgres_container_secret_dbpass }}
+
+Volume={{ day1_deploy_podman_postgres_container_volume_name }}:/var/lib/postgresql:Z
+
+Network={{ day1_deploy_podman_postgres_container_network_name}}
+
+PublishPort={{ ansible_facts.default_ipv4.address }}:{{ day1_deploy_podman_postgres_database_port }}:5432
+
+DropCapability=ALL
+AddCapability=CHOWN
+AddCapability=DAC_OVERRIDE
+AddCapability=FOWNER
+AddCapability=SETGID
+AddCapability=SETUID
+
+NoNewPrivileges=true
+
+HealthCmd=pg_isready -U "$POSTGRES_USER" -d "$POSTGRES_DB"
+HealthInterval=10s
+HealthTimeout=5s
+HealthRetries=5
+HealthStartPeriod=15s
+
+[Service]
+Restart=always
+TimeoutStartSec=300
+CPUQuota={{ day1_deploy_podman_postgres_container_cpu * 100  }}%
+MemoryMax={{ day1_deploy_podman_postgres_container_memory }}M
+
+[Install]
+WantedBy=default.target

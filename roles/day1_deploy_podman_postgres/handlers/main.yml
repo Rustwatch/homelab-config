@@ -1,0 +1,32 @@
+#SPDX-License-Identifier: MIT-0
+---
+# handlers file for day1_deploy_podman_postgres
+- name: "Restore SELinux contexts on Podman storage"
+  become: true
+  ansible.builtin.command:
+    cmd: restorecon -RFv /var/opt/podman
+
+- name: "RELOAD: Podman systemd"
+  become: true
+  become_user: "{{ day1_deploy_podman_postgres_os_user }}"
+  ansible.builtin.systemd_service:
+    daemon_reload: true
+    scope: user
+  environment:
+    XDG_RUNTIME_DIR: "/run/user/{{ day1_deploy_podman_uid }}"
+
+- name: "RESTART: PostgreSQL"
+  become: true
+  become_user: "{{ day1_deploy_podman_postgres_os_user }}"
+  ansible.builtin.systemd_service:
+    name: postgresdb.service
+    state: restarted
+    scope: user
+  environment:
+    XDG_RUNTIME_DIR: "/run/user/{{ day1_deploy_podman_uid }}"
+
+- name: Reload firewalld
+  ansible.builtin.command: firewall-cmd --reload
+  changed_when: true
+  become: true
+

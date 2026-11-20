@@ -1,6 +1,8 @@
 ---
 - name: test
   hosts: all
+  vars:
+    ansible_host_key_checking: false
   vars_files:
   - tmp_vars/credentials.yml
   tasks:

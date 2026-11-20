@@ -1,0 +1,13 @@
+---
+collections:
+  - name: containers.podman
+    version: "1.21.2"
+
+  - name: community.general
+    version: "14.0.1"
+  
+  - name: kubernetes.core
+    version: "6.6.0"
+
+  - name: https://github.com/Rustwatch/k3s-ansible.git
+    type: git
