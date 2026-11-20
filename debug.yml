@@ -1,0 +1,7 @@
+---
+- name: DEBUG
+  hosts: all
+  tasks:
+  - name: Debug
+    debug:
+      var: postgres_database_pass
