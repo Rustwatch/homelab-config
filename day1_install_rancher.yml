@@ -1,8 +1,6 @@
 ---
 - name: "Install Postgres Database"
   hosts: type_postgresdb:&application_rancher
-  vars_files:
-   - tmp_vars/credentials.yml
   vars:
     day1_deploy_podman_postgres_os_user: "{{ postgres_os_user }}"
     day1_deploy_podman_postgres_container_name: postgresdb
@@ -19,6 +17,16 @@
     day1_deploy_podman_postgres_database_pass: "{{ postgres_database_pass }}"
   roles:
   - role: day1_deploy_podman_postgres 
+
+
+- name: "Install Postgres Database"
+  hosts: function_k3s:&application_rancher
+  tasks:
+  - name: Install Required Packages
+    community.general.zypper:
+      name: python3-rpm
+      state: present
+    become: true
 
 - name: "Import kube cluster playbook"
   ansible.builtin.import_playbook: k3s.orchestration.site
@@ -38,8 +46,6 @@
 
 - name: "Install Rancher on Controller"
   hosts: type_controller
-  vars_files:
-   - tmp_vars/credentials.yml
   tasks:
     - name: Install Helm package
       community.general.zypper:
