@@ -1,4 +1,7 @@
 ---
-- debug:
-    msg: Test
+- name: "Install depending libraries"
+  community.general.zypper:
+    name: python313-rpm
+    state: present
+    become: true
 
