@@ -31,9 +31,9 @@
 - name: "Import kube cluster playbook"
   ansible.builtin.import_playbook: k3s.orchestration.site
   vars: 
-    k3s_ansible_cluster_group: "function_k3s:&application_rancher"
-    k3s_ansible_server_group: "type_controller:&application_rancher"
-    k3s_ansible_agent_group: "type_agent:&application_rancher"
+    k3s_ansible_cluster_group: "function_k3s"
+    k3s_ansible_server_group: "type_controller"
+    k3s_ansible_agent_group: "type_agent"
     k3s_server_location: /var/container/rancher/k3s
     use_external_database: true
     external_database_ip: "{{ hostvars[groups['type_postgresdb'][0]]['ansible_facts']['default_ipv4']['address'] }}"
