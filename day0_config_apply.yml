@@ -1,5 +1,5 @@
 ---
-- name: test
+- name: APPLY DEFAULT Config
   hosts: all
   vars:
     ansible_host_key_checking: false
