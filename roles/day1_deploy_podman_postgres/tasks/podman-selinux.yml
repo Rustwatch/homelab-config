@@ -3,6 +3,7 @@
   zypper:
     name: 
     - container-selinux 
+    - passt-selinux
     - policycoreutils-python-utils
     state: present
   become: true 

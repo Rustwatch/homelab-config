@@ -2,7 +2,7 @@
 - name: "INSTALL: Required Packages for container"
   zypper:
     name: 
-    - pass
+    - passt
     state: present
   become: true 
 
