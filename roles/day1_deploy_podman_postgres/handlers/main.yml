@@ -11,7 +11,7 @@
 - name: "Restore SELinux contexts on Podman storage"
   become: true
   ansible.builtin.command:
-    cmd: restorecon -RFv /var/opt/podman
+    cmd: "restorecon -RFv {{day1_deploy_podman_postgres_container_directory}}"
 
 - name: "RELOAD: Podman systemd"
   become: true
