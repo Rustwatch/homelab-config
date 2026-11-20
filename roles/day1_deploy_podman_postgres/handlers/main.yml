@@ -1,6 +1,13 @@
 #SPDX-License-Identifier: MIT-0
 ---
 # handlers file for day1_deploy_podman_postgres
+- name: podman | systemctl restart podman.service
+  ansible.builtin.service:
+    name: podman.service
+    state: restarted
+    enabled: true
+  become: true
+
 - name: "Restore SELinux contexts on Podman storage"
   become: true
   ansible.builtin.command:

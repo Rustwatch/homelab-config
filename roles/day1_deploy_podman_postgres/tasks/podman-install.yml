@@ -1,3 +1,22 @@
 ---
 - name: "Install Podman"
+  community.general.zypper:
+    name:
+    - podman
+    - podman-docker
+    state: present
+  become: true
+  notify:
+    - podman | systemctl restart podman.service
 
+- name: flush handlers
+  ansible.builtin.meta: flush_handlers
+
+- name: systemctl start podman.service
+  ansible.builtin.service:
+    name: podman.service
+    state: started
+    enabled: true
+  changed_when: false
+  failed_when: false
+  become: true

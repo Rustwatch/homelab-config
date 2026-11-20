@@ -1,7 +1,7 @@
 ---
 - name: "INCLUDE: ROLE: podman"
-  ansible.builtin.include_role:
-    name: podman
+  ansible.builtin.include_tasks:
+    file: podman-install.yml
 
 - name: "INCLUDE: podman configuration"
   ansible.builtin.include_tasks:
