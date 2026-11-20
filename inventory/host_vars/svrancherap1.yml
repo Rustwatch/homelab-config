@@ -33,7 +33,7 @@
     "import_from": "local:import/Leap-16.0-Minimal-VM.x86_64-Cloud.qcow2"
     "interface": "scsi0"
     "iothread": false
-    "path_in_datastore": "vm-100-disk-0"
+    "path_in_datastore": "vm-104-disk-0"
     "queues": 0
     "replicate": true
     "serial": ""
@@ -50,7 +50,7 @@
     "import_from": ""
     "interface": "scsi1"
     "iothread": false
-    "path_in_datastore": "vm-100-disk-1"
+    "path_in_datastore": "vm-104-disk-1"
     "queues": 0
     "replicate": true
     "serial": ""
@@ -61,7 +61,7 @@
   "hook_script_file_id": ""
   "hostpci": []
   "hotplug": null
-  "id": "100"
+  "id": "104"
   "initialization":
   - "datastore_id": "local-lvm"
     "dns": []
@@ -84,7 +84,7 @@
   "keyboard_layout": "en-us"
   "kvm_arguments": ""
   "mac_addresses":
-  - "BC:24:11:E9:D6:BF"
+  - "BC:24:11:4E:57:30"
   "machine": ""
   "memory":
   - "dedicated": 8192
@@ -99,7 +99,7 @@
     "disconnected": false
     "enabled": true
     "firewall": false
-    "mac_address": "BC:24:11:E9:D6:BF"
+    "mac_address": "BC:24:11:4E:57:30"
     "model": "virtio"
     "mtu": 0
     "queues": 0
@@ -143,5 +143,5 @@
   "usb": []
   "vga": []
   "virtiofs": []
-  "vm_id": 100
+  "vm_id": 104
   "watchdog": []
