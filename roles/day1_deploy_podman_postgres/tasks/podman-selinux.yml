@@ -11,7 +11,7 @@
 - name: "CONFIGURE: SELinux equivalence for Podman storage"
   community.general.sefcontext:
     target: "{{ day1_deploy_podman_postgres_container_directory }}"
-    substitute: /var/lib/containers/podman
+    substitute: /var/lib/containers/storage 
     state: present
   become: true
   notify: Restore SELinux contexts on Podman storage
