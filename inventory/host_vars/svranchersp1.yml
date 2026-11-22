@@ -13,7 +13,7 @@
   - "affinity": ""
     "architecture": ""
     "cores": 2
-    "flags": []
+    "flags": null
     "hotplugged": 0
     "limit": 0
     "numa": false
@@ -84,7 +84,7 @@
   "keyboard_layout": "en-us"
   "kvm_arguments": ""
   "mac_addresses":
-  - "BC:24:11:41:43:97"
+  - "BC:24:11:AC:22:FD"
   "machine": ""
   "memory":
   - "dedicated": 4096
@@ -99,7 +99,7 @@
     "disconnected": false
     "enabled": true
     "firewall": false
-    "mac_address": "BC:24:11:41:43:97"
+    "mac_address": "BC:24:11:AC:22:FD"
     "model": "virtio"
     "mtu": 0
     "queues": 0
@@ -125,11 +125,11 @@
   "stop_on_destroy": false
   "tablet_device": true
   "tags":
-  - "provider_terraform"
-  - "os_suseLeap"
   - "application_rancher"
-  - "type_controller"
   - "function_k3s"
+  - "os_suseleap"
+  - "provider_terraform"
+  - "type_controller"
   "template": false
   "timeout_clone": 1800
   "timeout_create": 1800
