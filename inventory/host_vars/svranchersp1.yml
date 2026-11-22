@@ -13,7 +13,7 @@
   - "affinity": ""
     "architecture": ""
     "cores": 2
-    "flags": null
+    "flags": []
     "hotplugged": 0
     "limit": 0
     "numa": false
@@ -125,11 +125,11 @@
   "stop_on_destroy": false
   "tablet_device": true
   "tags":
-  - "application_rancher"
-  - "function_k3s"
-  - "os_suseleap"
   - "provider_terraform"
+  - "os_suseLeap"
+  - "application_rancher"
   - "type_controller"
+  - "function_k3s"
   "template": false
   "timeout_clone": 1800
   "timeout_create": 1800
