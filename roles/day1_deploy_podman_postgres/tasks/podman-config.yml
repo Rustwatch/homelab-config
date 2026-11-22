@@ -32,6 +32,15 @@
     mode: '0750'
   become: true
 
+- name: "CREATE: Postgres Root Container Directory"
+  ansible.builtin.file:
+    path: "{{ day1_deploy_podman_postgres_container_directory }}/storage"
+    state: directory
+    owner: "{{ day1_deploy_podman_postgres_os_user}}"
+    group: "{{ day1_deploy_podman_postgres_os_user}}"
+    mode: '0750'
+  become: true
+
 - name: "CONFIGURE: Podman Quadlet user generator"
   ansible.builtin.file:
     src: /usr/libexec/podman/quadlet
@@ -40,16 +49,6 @@
     owner: root
     group: root
   become: true
-
-- name: "DEPLOY TEMPLATE: For storage location"
-  ansible.builtin.template:
-    src: storage.conf.j2
-    dest: "{{ day1_deploy_podman_postgres_home }}/.config/containers/storage.conf"
-    owner: "{{ day1_deploy_podman_postgres_os_user}}"
-    group: "{{ day1_deploy_podman_postgres_os_user}}"
-    mode: '0640'
-  become: true
-  when: day1_deploy_podman_postgres_container_directory != '/var/lib/containers/storage'
 
 - name: "GET: Podman user UID"
   ansible.builtin.getent:
@@ -60,6 +59,15 @@
 - name: "SET: Podman user UID"
   ansible.builtin.set_fact:
     day1_deploy_podman_uid: "{{ ansible_facts.getent_passwd[day1_deploy_podman_postgres_os_user][1] }}"
+
+- name: "DEPLOY TEMPLATE: For storage location"
+  ansible.builtin.template:
+    src: storage.conf.j2
+    dest: "{{ day1_deploy_podman_postgres_home }}/.config/containers/storage.conf"
+    owner: "{{ day1_deploy_podman_postgres_os_user}}"
+    group: "{{ day1_deploy_podman_postgres_os_user}}"
+    mode: '0640'
+  become: true
 
 - name: "DEPLOY TEMPLATE: Functions for Rootloes podman"
   ansible.builtin.template:

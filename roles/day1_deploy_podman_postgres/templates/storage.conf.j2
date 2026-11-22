@@ -1,3 +1,4 @@
 [storage]
 driver = "overlay"
+runroot = "/run/user/{{ day1_deploy_podman_uid }}/containers"
 graphroot = "{{ day1_deploy_podman_postgres_container_directory }}"
