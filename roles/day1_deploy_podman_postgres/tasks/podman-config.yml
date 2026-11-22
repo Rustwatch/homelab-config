@@ -49,6 +49,7 @@
     group: "{{ day1_deploy_podman_postgres_os_user}}"
     mode: '0640'
   become: true
+  when: day1_deploy_podman_postgres_container_directory != '/var/lib/containers/storage'
 
 - name: "GET: Podman user UID"
   ansible.builtin.getent:

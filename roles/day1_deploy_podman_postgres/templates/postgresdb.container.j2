@@ -28,7 +28,7 @@ AddCapability=SETUID
 
 NoNewPrivileges=true
 
-HealthCmd=pg_isready -U "$POSTGRES_USER" -d "$POSTGRES_DB"
+HealthCmd=pg_isready -U {{ day1_deploy_podman_postgres_database_user }} -d {{ day1_deploy_podman_postgres_database_name }}
 HealthInterval=10s
 HealthTimeout=5s
 HealthRetries=5

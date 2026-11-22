@@ -15,3 +15,5 @@
     state: present
   become: true
   notify: Restore SELinux contexts on Podman storage
+  when: day1_deploy_podman_postgres_container_directory != '/var/lib/containers/storage'
+
