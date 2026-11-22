@@ -10,7 +10,7 @@
     day1_deploy_podman_postgres_container_volume_name: postgres_data
     day1_deploy_podman_postgres_container_network_name: nw_postgres
     day1_deploy_podman_postgres_container_secret_dbpass: sec_postgres
-    day1_deploy_podman_postgres_database_version: 18
+    day1_deploy_podman_postgres_database_version: "{{ postgres_database_version }}"
     day1_deploy_podman_postgres_database_name: "{{ postgres_database_name }}"
     day1_deploy_podman_postgres_database_port: "{{ postgres_database_port }}"
     day1_deploy_podman_postgres_database_user: "{{ postgres_database_user }}"
