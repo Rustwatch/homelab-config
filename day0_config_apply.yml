@@ -1,4 +1,14 @@
 ---
+- name: Wait till VM is available
+  hosts: all
+  gather_facts: false
+  tasks:
+  - name: Wait until VM is reachable
+    ansible.builtin.wait_for_connection:
+      delay: 5
+      sleep: 10
+      timeout: 600
+
 - name: APPLY DEFAULT Config
   hosts: all
   vars:
