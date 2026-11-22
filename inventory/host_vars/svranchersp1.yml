@@ -84,7 +84,7 @@
   "keyboard_layout": "en-us"
   "kvm_arguments": ""
   "mac_addresses":
-  - "BC:24:11:AC:22:FD"
+  - "BC:24:11:66:0E:36"
   "machine": ""
   "memory":
   - "dedicated": 4096
@@ -99,7 +99,7 @@
     "disconnected": false
     "enabled": true
     "firewall": false
-    "mac_address": "BC:24:11:AC:22:FD"
+    "mac_address": "BC:24:11:66:0E:36"
     "model": "virtio"
     "mtu": 0
     "queues": 0
