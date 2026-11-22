@@ -3,9 +3,13 @@
   hosts: all
   vars:
     ansible_host_key_checking: false
-  vars_files:
-  - tmp_vars/credentials.yml
   tasks:
-    - name: "INCLUDE ROLE: day0_standard_config"
-      ansible.builtin.include_role:
-        name: day0_standard_config
+  - name: Wait until VM is reachable
+    ansible.builtin.wait_for_connection:
+      delay: 5
+      sleep: 10
+      timeout: 600
+
+  - name: "INCLUDE ROLE: day0_standard_config"
+    ansible.builtin.include_role:
+      name: day0_standard_config
