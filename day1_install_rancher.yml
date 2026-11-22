@@ -6,7 +6,7 @@
     day1_deploy_podman_postgres_container_name: postgresdb
     day1_deploy_podman_postgres_container_memory: 4096
     day1_deploy_podman_postgres_container_cpu: 3
-    day1_deploy_podman_postgres_container_directory: /var/lib/containers/storage
+    day1_deploy_podman_postgres_container_directory: /var/lib/containers
     day1_deploy_podman_postgres_container_volume_name: postgres_data
     day1_deploy_podman_postgres_container_network_name: nw_postgres
     day1_deploy_podman_postgres_container_secret_dbpass: sec_postgres
