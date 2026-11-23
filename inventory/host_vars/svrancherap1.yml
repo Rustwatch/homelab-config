@@ -64,7 +64,10 @@
   "id": "104"
   "initialization":
   - "datastore_id": "local-lvm"
-    "dns": []
+    "dns":
+    - "domain": "server.tech.home.arpa"
+      "servers":
+      - "10.10.22.1"
     "file_format": ""
     "interface": "ide2"
     "ip_config":
@@ -84,7 +87,7 @@
   "keyboard_layout": "en-us"
   "kvm_arguments": ""
   "mac_addresses":
-  - "BC:24:11:87:AC:9E"
+  - "BC:24:11:B2:8B:B8"
   "machine": ""
   "memory":
   - "dedicated": 8192
@@ -99,7 +102,7 @@
     "disconnected": false
     "enabled": true
     "firewall": false
-    "mac_address": "BC:24:11:87:AC:9E"
+    "mac_address": "BC:24:11:B2:8B:B8"
     "model": "virtio"
     "mtu": 0
     "queues": 0
