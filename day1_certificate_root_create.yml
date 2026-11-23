@@ -1,0 +1,87 @@
+---
+- name: Create Homelab Root CA
+  hosts: localhost
+  connection: local
+  gather_facts: false
+
+  vars_files:
+    - ../../inventories/group_vars/all/vault-pki.yml
+
+  tasks:
+    - name: Create CA directory
+      ansible.builtin.file:
+        path: "{{ pki_root_ca_directory }}"
+        state: directory
+        owner: "{{ ansible_user_id }}"
+        mode: "0700"
+
+    - name: Check whether CA private key exists
+      ansible.builtin.stat:
+        path: "{{ pki_root_ca_private_key }}"
+      register: pki_ca_key
+
+    - name: Check whether CA certificate exists
+      ansible.builtin.stat:
+        path: "{{ pki_root_ca_certificate }}"
+      register: pki_ca_cert
+
+    - name: Ensure CA key and certificate have consistent state
+      ansible.builtin.assert:
+        that:
+          - pki_ca_key.stat.exists == pki_ca_cert.stat.exists
+        fail_msg: >-
+          CA private key and certificate are inconsistent.
+          Refusing to overwrite existing PKI material.
+
+    - name: Generate root CA private key
+      community.crypto.openssl_privatekey:
+        path: "{{ pki_root_ca_private_key }}"
+        type: RSA
+        size: "{{ pki_root_ca_key_size }}"
+        cipher: aes256
+        passphrase: "{{ vault_pki_root_ca_passphrase }}"
+        mode: "0600"
+      no_log: true
+      when: not pki_ca_key.stat.exists
+
+    - name: Generate root CA CSR
+      community.crypto.openssl_csr:
+        path: "{{ pki_root_ca_directory }}/ca.csr"
+        privatekey_path: "{{ pki_root_ca_private_key }}"
+        common_name: "{{ pki_root_ca_name }}"
+        basic_constraints:
+          - CA:TRUE
+        basic_constraints_critical: true
+        key_usage:
+          - keyCertSign
+          - cRLSign
+        key_usage_critical: true
+      when: not pki_ca_cert.stat.exists
+
+    - name: Generate self-signed root CA certificate
+      community.crypto.x509_certificate:
+        path: "{{ pki_root_ca_certificate }}"
+        privatekey_path: "{{ pki_root_ca_private_key }}"
+        csr_path: "{{ pki_root_ca_directory }}/ca.csr"
+        provider: selfsigned
+        selfsigned_not_after: "+3650d"
+        mode: "0644"
+      when: not pki_ca_cert.stat.exists
+
+    - name: Validate root CA certificate
+      ansible.builtin.command:
+        argv:
+          - openssl
+          - x509
+          - -in
+          - "{{ pki_root_ca_certificate }}"
+          - -noout
+          - -subject
+          - -issuer
+          - -dates
+      register: pki_ca_validation
+      changed_when: false
+
+    - name: Display root CA information
+      ansible.builtin.debug:
+        var: pki_ca_validation.stdout_lines

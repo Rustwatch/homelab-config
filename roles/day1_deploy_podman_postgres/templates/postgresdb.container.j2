@@ -11,6 +11,7 @@ Environment=POSTGRES_DB={{ day1_deploy_podman_postgres_database_name }}
 Environment=POSTGRES_USER={{ day1_deploy_podman_postgres_database_user }}
 Environment=POSTGRES_PASSWORD_FILE=/run/secrets/{{ day1_deploy_podman_postgres_container_secret_dbpass}}
 
+
 Secret={{ day1_deploy_podman_postgres_container_secret_dbpass }}
 
 Volume={{ day1_deploy_podman_postgres_container_volume_name }}:/var/lib/postgresql:Z

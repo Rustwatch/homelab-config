@@ -1,0 +1,109 @@
+---
+- name: "Install Postgres Database"
+  hosts: type_postgresdb:&application_rancher
+  vars:
+    day1_deploy_podman_etcd_os_user: "{{ podman_os_user }}"
+    day1_deploy_podman_etcd_container_name: etcddb
+    day1_deploy_podman_etcd_container_memory: 4096
+    day1_deploy_podman_etcd_container_cpu: 3
+    day1_deploy_podman_etcd_container_directory: /var/lib/containers
+    day1_deploy_podman_etcd_container_volume_name: etcd_data
+    day1_deploy_podman_etcd_container_network_name: nw_etcd
+    day1_deploy_podman_etcd_container_secret_dbpass: sec_etcd
+    day1_deploy_podman_etcd_database_version: "{{ etcd_database_version }}"
+    day1_deploy_podman_etcd_database_name: "{{ etcd_database_name }}"
+    day1_deploy_podman_etcd_database_port: "{{ etcd_database_port }}"
+    day1_deploy_podman_etcd_database_user: "{{ etcd_database_user }}"
+    day1_deploy_podman_etcd_database_pass: "{{ etcd_database_pass }}"
+  roles:
+  - role: day1_deploy_podman_postgres 
+
+
+- name: "Install required Packages for K3S"
+  hosts: function_k3s:&application_rancher
+  tasks:
+  - name: Install Required Packages
+    community.general.zypper:
+      name: 
+      - python3-rpm
+      - k3s-install
+      - k3s-selinux
+      state: present
+    become: true
+
+- name: "Import kube cluster playbook"
+  ansible.builtin.import_playbook: k3s.orchestration.site
+  vars: 
+    k3s_ansible_cluster_group: "function_k3s"
+    k3s_ansible_server_group: "type_controller"
+    k3s_ansible_agent_group: "type_agent"
+    use_external_database: true
+    external_database_ip: "{{ hostvars[groups['type_postgresdb'][0]]['ansible_facts']['default_ipv4']['address'] }}"
+    extra_server_args: "--datastore-endpoint=postgres://{{ postgres_database_user }}:{{ postgres_database_pass | urlencode | replace('%', '%%') }}@{{ external_database_ip }}:{{ postgres_database_port }}/{{ postgres_database_name }}"
+    api_endpoint: "{{ hostvars[groups['type_controller'][0]]['ansible_facts']['default_ipv4']['address'] }}"
+    ansible_user: "sysautomation"
+    ansible_host_key_checking: false
+    k3s_version: "{{ k3s_version_nr }}"
+    token: "{{ k3s_api_token }}"
+
+- name: "Install Rancher on Controller"
+  hosts: type_controller
+  tasks:
+    - name: Install Helm package
+      community.general.zypper:
+        name: helm
+        state: present
+      become: true
+
+    - name: Add Jetstack Helm repository
+      kubernetes.core.helm_repository:
+        name: jetstack
+        repo_url: https://charts.jetstack.io
+        state: present
+      become: true
+
+    - name: Add Rancher Helm repository
+      kubernetes.core.helm_repository:
+        name:  rancher-stable
+        repo_url: https://releases.rancher.com/server-charts/stable
+        state: present
+      become: true
+
+    - name: Install cert-manager
+      kubernetes.core.helm:
+        name: cert-manager
+        chart_ref: jetstack/cert-manager
+        chart_version: "{{ cert_manager_chart_version }}"
+        release_namespace: cert-manager
+        create_namespace: true
+        kubeconfig: /etc/rancher/k3s/k3s.yaml
+        wait: true
+        timeout: 10m
+        values:
+          crds:
+            enabled: true
+      become: true
+
+    - name: Install Rancher
+      kubernetes.core.helm:
+        name: rancher
+        chart_ref: rancher-stable/rancher
+        chart_version: "{{ rancher_chart_version }}"
+        release_namespace: "{{ rancher_namespace }}"
+        create_namespace: true
+        kubeconfig: /etc/rancher/k3s/k3s.yaml
+        update_repo_cache: true
+        wait: true
+        timeout: 10m
+        values:
+          hostname: "{{ rancher_hostname }}"
+          replicas: "{{ rancher_replicas }}"
+          bootstrapPassword: "{{ rancher_bootstrap_password }}"
+          ingress:
+            tls:
+              source: rancher
+      become: true
+
+    - name: Display Rancher URL
+      ansible.builtin.debug:
+        msg: "Rancher is available at https://{{ rancher_hostname }}"

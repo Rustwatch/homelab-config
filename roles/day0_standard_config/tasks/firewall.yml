@@ -5,3 +5,13 @@
     enabled: true
     state: started
   become: true
+
+- name: Configure DNS search domain
+  become: true
+  community.general.nmcli:
+    conn_name: "cloud-init eth0"
+    dns4:
+      - 10.10.21.1
+    dns4_search:
+      - server.tech.home.arpa
+    state: present
