@@ -10,7 +10,7 @@ collections:
     version: "6.6.0"
 
   - name: community.crypto
-    version: latest
+    version: "3.5.1"
 
   - name: https://github.com/Rustwatch/k3s-ansible.git
     type: git
