@@ -14,7 +14,11 @@ Environment=POSTGRES_PASSWORD_FILE=/run/secrets/{{ day1_deploy_podman_postgres_c
 
 Secret={{ day1_deploy_podman_postgres_container_secret_dbpass }}
 
+{% if day1_deploy_podman_postgres_database_version | int >= 18 %}
 Volume={{ day1_deploy_podman_postgres_container_volume_name }}:/var/lib/postgresql:Z
+{% else %}
+Volume={{ day1_deploy_podman_postgres_container_volume_name }}:/var/lib/postgresql/data:Z
+{% endif %}
 
 Network={{ day1_deploy_podman_postgres_container_network_name}}
 
